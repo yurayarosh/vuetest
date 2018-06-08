@@ -1,5 +1,4 @@
 <template>
-  <main-layout>
     <!-- begin home -->
     <div class="home">  
 
@@ -8,7 +7,7 @@
           <div class="container">
             <div class="subnav__inner">
               <ul class="subnav__list">
-                <posts-nav-item v-for="item in postsNavList" v-bind:key="item.id" class="subnav__item"><a href="#" class="subnav__link">{{item.link}}</a></posts-nav-item>
+                <posts-nav-item v-for="item in postsNavList" :key="item.id"><a href="#" class="subnav__link">{{item.link}}</a></posts-nav-item>
               </ul>
             </div>
           </div>
@@ -19,22 +18,31 @@
 
         <div class="posts">
 
-          <post class="post" v-for="post in posts" v-bind:key="post.id">
-            <div class="post__title">
-              <h2 class="title">{{ post.title }}</h2>
-              <span class="subttl">{{ post.subTitle }}</span>
+          <div class="posts__search">
+            <div class="form">
+              <form action="">
+                <div class="form__field">
+                  <input type="text" placeholder="Search...">
+                </div>
+              </form>
             </div>
-            <div class="post__img"><img :src="post.img" alt=""></div>
-            <div class="post__desc" v-html="post.desc">
-              {{post.desc}}
-            </div>
-            <a href="#" class="post__link"><i>&rarr;</i>Read more</a>
-          </post>
+          </div>
+
+          <post
+            v-for="post in posts"
+            :key="post.id"
+            :modClass="post.modClass"
+            :title="post.title"
+            :subTitle="post.subTitle"
+            :img="post.img"
+            :desc="post.desc"
+            :descHidden="post.descHidden"
+          />
 
           <div class="pagination">
             <a href="#" class="pagination__prev"></a>
             <ul class="pagination__list">
-              <pagination-item v-for="item in paginationList" v-bind:key="item.id" class="pagination__item"><a href="#" v-bind:class="['pagination__link', item.isDisabled ? 'is-disabled' : '']">{{item.number}}</a></pagination-item>
+              <pagination-item v-for="item in paginationList" :key="item.id"><a href="#" :class="['pagination__link', item.isDisabled ? 'is-disabled' : '']">{{item.number}}</a></pagination-item>
             </ul>
             <a href="#" class="pagination__next"></a>
           </div>
@@ -45,32 +53,41 @@
 
     </div>
     <!-- end home -->
-  </main-layout>
 </template>
 
 <script>
-  import mainLayout from '@/layouts/main-layout'
+  import postsNavItem from '@/components/postsNavItem';
+  import post from '@/components/post';
+  import paginationItem from '@/components/paginationItem';  
+  import animBlocks from '@/mixins/animBlocks';
+
   export default{
     name: 'home',
     components: {
-      mainLayout
+      postsNavItem,
+      post,
+      paginationItem
     },
     data(){
-      return{
+      return{        
         posts: [
           {
             id: 1,
+            modClass: 'js-animated-block has-no-border-top',
             title: 'Our Favourite Task Management App!',
             subTitle: 'Posted on March 3, 2013',
-            img: 'img.jpg',
-            desc: "<p>6Wunderkinder’s flagship product, Wunderlist, has been a massive hit since its inception. Arguably one of the best to manage your tasks in your business and personal life. What makes it different from any other app? Simplicity. You don’t need to fiddle around with so many unnecessary features like you would with traditional to-do apps. Soon as you open the app, Wunderlist dives right into your tasks and you can get to work.</p>"
+            img: '/img.jpg',
+            desc: "<p>6Wunderkinder’s flagship product, Wunderlist, has been a massive hit since its inception. Arguably one of the best to manage your tasks in your business and personal life. What makes it different from any other app? Simplicity. You don’t need to fiddle around with so many unnecessary features like you would with traditional to-do apps. Soon as you open the app, Wunderlist dives right into your tasks and you can get to work.</p>",
+            descHidden: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero ut minus nihil dolorum, qui quam corporis, praesentium deleniti, molestiae sint vel reprehenderit consequatur, totam aliquam magni repellat fugiat veritatis ipsum!</p>'
           },
           {
             id: 2,
+            modClass: 'js-animated-block',
             title: 'Our Favourite Task Management App!',
             subTitle: 'Posted on March 3, 2013',
-            img: 'img.jpg',
-            desc: "<p>6Wunderkinder’s flagship product, Wunderlist, has been a massive hit since its inception. Arguably one of the best to manage your tasks in your business and personal life. What makes it different from any other app? Simplicity. You don’t need to fiddle around with so many unnecessary features like you would with traditional to-do apps. Soon as you open the app, Wunderlist dives right into your tasks and you can get to work.</p>"
+            img: '/img.jpg',
+            desc: "<p>6Wunderkinder’s flagship product, Wunderlist, has been a massive hit since its inception. Arguably one of the best to manage your tasks in your business and personal life. What makes it different from any other app? Simplicity. You don’t need to fiddle around with so many unnecessary features like you would with traditional to-do apps. Soon as you open the app, Wunderlist dives right into your tasks and you can get to work.</p>",
+            descHidden: '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe obcaecati voluptatum, suscipit hic minima quas perspiciatis voluptatibus eveniet iste facilis sapiente quo odit, facere eligendi ipsa quasi debitis soluta. Corporis!</p>'
           }
         ],
         postsNavList: [
@@ -89,9 +106,7 @@
         ]
       }
     },
-    function(){
-      console.log('test');
-    }
+    mixins: [animBlocks]
   };
 </script>
 
@@ -144,33 +159,6 @@
   padding-top: 50px
   padding-bottom: 80px
 
-.post
-  display: block
-  margin-bottom: 50px
-  padding-top: 50px
-  border-top: 1px solid  #e0e0e0
-  &:first-child
-    border-top: none
-  &__title    
-    margin-bottom: 50px
-    text-align: center
-    span
-      font-size: 14px
-      color: #777
-      +f-proxima-bold
-  &__img
-    text-align: center
-    margin-bottom: 40px
-    img
-      max-width: 100%
-  &__desc
-    font-size: 16px
-    color: #111
-    margin-bottom: 15px
-  &__link
-    font-size: 16px
-    color: #111
-    +f-proxima-bold
 
 .pagination
   display: flex
@@ -214,5 +202,23 @@
     &::after
       +icon-arrow(15, 15, 2, #fff, -135)
       margin-right: 7px
+
+.fade-enter-active, .fade-leave-active
+  transition: opacity .5s
+
+.fade-enter, .fade-leave-to
+  opacity: 0
+
+.form
+  width: 100%
+  &__field
+    max-width: 300px
+    input
+      width: 100%
+      height: 40px
+      line-height: 40px
+      border: 1px solid  #ccc
+      font-size: 16px
+      padding: 5px
 
 </style>
