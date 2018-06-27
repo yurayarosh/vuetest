@@ -22,14 +22,14 @@
             <div class="form">
               <form action="">
                 <div class="form__field">
-                  <input type="text" placeholder="Search...">
+                  <input v-model="searchValue" type="text" placeholder="Search...">
                 </div>
               </form>
             </div>
           </div>
 
           <post
-            v-for="post in posts"
+            v-for="post in filteredPosts"
             :key="post.id"
             :modClass="post.modClass"
             :title="post.title"
@@ -62,7 +62,7 @@
   import animBlocks from '@/mixins/animBlocks';
 
   export default{
-    name: 'home',
+    name: 'home',    
     components: {
       postsNavItem,
       post,
@@ -83,7 +83,7 @@
           {
             id: 2,
             modClass: 'js-animated-block',
-            title: 'Our Favourite Task Management App!',
+            title: 'Year in Review: Our Favourite Apps from 2012 ',
             subTitle: 'Posted on March 3, 2013',
             img: '/img.jpg',
             desc: "<p>6Wunderkinder’s flagship product, Wunderlist, has been a massive hit since its inception. Arguably one of the best to manage your tasks in your business and personal life. What makes it different from any other app? Simplicity. You don’t need to fiddle around with so many unnecessary features like you would with traditional to-do apps. Soon as you open the app, Wunderlist dives right into your tasks and you can get to work.</p>",
@@ -103,10 +103,18 @@
           {id: 4, number: '4'},
           {id: 5, number: '5'},
           {id: 6, number: '...', isDisabled: true}
-        ]
+        ],
+        searchValue: ''
       }
     },
-    mixins: [animBlocks]
+    mixins: [animBlocks],
+    computed: {
+      filteredPosts() {
+        return this.posts.filter(post => {
+          return post.title.toLowerCase().includes(this.searchValue.toLowerCase())
+        })
+      }
+    }
   };
 </script>
 
@@ -202,12 +210,6 @@
     &::after
       +icon-arrow(15, 15, 2, #fff, -135)
       margin-right: 7px
-
-.fade-enter-active, .fade-leave-active
-  transition: opacity .5s
-
-.fade-enter, .fade-leave-to
-  opacity: 0
 
 .form
   width: 100%
