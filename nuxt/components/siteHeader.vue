@@ -4,12 +4,12 @@
     <div class="container">
       <div class="header__inner">
         <div class="header__logo">
-          <router-link class="logo" to="/">Classic</router-link>
+          <nuxt-link class="logo" to="/">Classic</nuxt-link>
         </div>
         <div class="header__nav">
           <nav class="nav">
             <ul class="nav__list">
-              <nav-item v-for="item in nav" v-bind:key="item.id" class="nav__item"><router-link class="nav__link" :to="item.to">{{item.linkText}}</router-link></nav-item>
+              <nav-item v-for="item in nav" v-bind:key="item.id" v-bind:className="item.className"><nuxt-link class="nav__link" :to="item.to">{{item.linkText}}</nuxt-link></nav-item>
             </ul>
           </nav>
         </div>
@@ -22,17 +22,30 @@
 
 <script>
 
+<<<<<<< HEAD
 var logoTwo = require('svg-inline-loader?./facebook.svg');
+=======
+  import navItem from '@/components/navItem';
+>>>>>>> 47746b6646634402883659541215ee8117683933
 
   export default{
     data(){
       return{
         nav: [
+<<<<<<< HEAD
         {id: 1, to: '/', linkText: 'Home'},
         {id: 2, to: 'about', linkText: 'About'},
         {id: 3, to: 'blog', linkText: 'Blog'}
+=======
+          {id: 1, className: 'nav__item', to: '/', linkText: 'Home'},
+          {id: 2, className: 'nav__item', to: 'about', linkText: 'About'},
+          {id: 3, className: 'nav__item', to: 'blog', linkText: 'Blog'}
+>>>>>>> 47746b6646634402883659541215ee8117683933
         ]
       }
+    },
+    components: {
+      navItem
     }
   }
 

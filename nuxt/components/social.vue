@@ -2,7 +2,7 @@
   <!-- begin social -->
   <div class="social">
     <ul class="social__list">
-      <social-item v-for="item in socialList" v-bind:key="item.id" class="social__item">
+      <social-item v-for="item in socialList" v-bind:key="item.id">
         <a href="#" class="social__link" v-html="item.icon">
           {{item.icon}}
         </a>
@@ -13,7 +13,11 @@
 </template>
 
 <script>
+  import socialItem from '@/components/socialItem';
   export default {
+    components: {
+      socialItem
+    },
     data(){
       return{
         socialList: [

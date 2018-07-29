@@ -6,7 +6,7 @@
         <div class="footer__nav">
           <nav class="nav-footer">
             <ul class="nav-footer__list">
-              <nav-item v-for="item in nav" v-bind:key="item.id" class="nav-footer__item"><router-link class="nav-footer__link" :to="item.to">{{item.linkText}}</router-link></nav-item>
+              <nav-item v-for="item in nav" v-bind:key="item.id" v-bind:className="item.className"><router-link class="nav-footer__link" :to="item.to">{{item.linkText}}</router-link></nav-item>
             </ul>
           </nav>
         </div>
@@ -25,17 +25,19 @@
 </template>
 
 <script>
-  import social from '@/components/social' 
+  import social from '@/components/social'; 
+  import navItem from '@/components/navItem'; 
   export default {
     components: {
       social,
+      navItem
     },
     data(){
     return{
       nav: [
-        {id: 1, to: '/', linkText: 'Home'},
-        {id: 2, to: 'about', linkText: 'About'},
-        {id: 3, to: 'blog', linkText: 'Blog'}
+        {id: 1, className: 'nav-footer__item', to: '/', linkText: 'Home'},
+        {id: 2, className: 'nav-footer__item', to: 'about', linkText: 'About'},
+        {id: 3, className: 'nav-footer__item', to: 'blog', linkText: 'Blog'}
       ]
     }
   }
