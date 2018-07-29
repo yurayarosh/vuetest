@@ -15,19 +15,22 @@
         </div>
       </div>
     </div>
+    <img src="icons/facebook.svg" alt="">
   </header>
   <!-- end header -->
 </template>
 
 <script>
 
+var logoTwo = require('svg-inline-loader?./facebook.svg');
+
   export default{
     data(){
       return{
         nav: [
         {id: 1, to: '/', linkText: 'Home'},
-        {id: 1, to: 'about', linkText: 'About'},
-        {id: 1, to: 'blog', linkText: 'Blog'}
+        {id: 2, to: 'about', linkText: 'About'},
+        {id: 3, to: 'blog', linkText: 'Blog'}
         ]
       }
     }

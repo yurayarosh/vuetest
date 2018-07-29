@@ -2,7 +2,6 @@
   <div class="page">
     
     <site-header/>
-
     <slot></slot>
 
     <site-footer/>   
@@ -32,7 +31,6 @@ body
   font-size: 16px
   line-height: 1.4
   +f-proxima
-  font-weight: 400
 
 .container
   max-width: 980px
