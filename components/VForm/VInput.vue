@@ -5,8 +5,8 @@
       :type="type"
       :name="name"
       :id="id"
-      v-model="content"
-      @input="handleInput"
+      :value="value"
+      @input="onInput"
     />
   </div>
 </template>
@@ -19,8 +19,8 @@ export default {
     }
   },
   methods: {
-    handleInput(e) {
-      this.$emit('input', this.content)
+    onInput(e) {
+      this.$emit('input', this.content, e)
     },
   },
   props: {
@@ -51,7 +51,7 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 @import '@/sass/helpers/_variables'
 @import '@/sass/helpers/_mixins'
 

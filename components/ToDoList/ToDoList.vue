@@ -2,12 +2,12 @@
   <div class="to-do-list">
     <div class="to-do-list__top">
       <form class="to-do-list__form" action="" @submit="onSubmit">
-        <v-input mod="to-do-list__input" v-model="taskTitle" />
+        <v-input mod="to-do-list__input" :value="taskTitle" @input="onInput, $event" />
         <v-btn mod="to-do-list__btn btn--primary">add</v-btn>
       </form>
     </div>
 
-    <div v-if="items" class="to-do-list__list">
+    <div v-if="items.length > 0" class="to-do-list__list">
       <div
         v-for="(item, i) in items"
         :key="i"
@@ -20,14 +20,12 @@
       </div>
     </div>
 
-    <div v-if="items" class="to-do-list__bottom">
-      <label class="to-do-list__checkbox">
-        <input type="checkbox" />
-        <span>check all</span>
-      </label>
+    <div v-if="items.length > 0" class="to-do-list__bottom">
+      <v-checkbox title="check all" mod="to-do-list__checkbox" @change="onCheckAllChange" />
+
       <div class="to-do-list__btns">
-        <v-btn :onClick="onClearAllClick">Clear all</v-btn>
-        <v-btn mod="btn--primary">Clear done</v-btn>
+        <v-btn @click="onClearAllClick">Clear all</v-btn>
+        <v-btn mod="btn--primary" @click="onClearDoneClick">Clear done</v-btn>
       </div>
     </div>
   </div>
@@ -36,9 +34,14 @@
 <script>
 import VBtn from '@/components/VForm/VBtn'
 import VInput from '@/components/VForm/VInput'
+import VCheckbox from '@/components/VForm/VCheckbox'
 
 function handleSubmit(e) {
   e.preventDefault()
+  if(this.taskTitle.trim() === '') {
+    alert('You should write something')
+    return
+  }
   this.items = [...this.items, { title: this.taskTitle }]
 }
 
@@ -56,6 +59,20 @@ function handleClearAllClick(e) {
   this.items = []
 }
 
+function handleClearDoneClick(e) {
+  this.items = this.items.filter(item => !item.isDone)
+}
+
+function handleCheckAllChange(e) {
+  if (e.target.checked) {
+    this.items.forEach(item => item.isDone = true)
+  } else {
+    this.items.forEach(item => item.isDone = false)
+  }
+
+  this.items = [...this.items]
+}
+
 export default {
   data() {
     return {
@@ -64,12 +81,20 @@ export default {
       onDeleteItemClick: handleDeleteItemClick.bind(this),
       onItemClick: handleItemClick.bind(this),
       onClearAllClick: handleClearAllClick.bind(this),
+      onClearDoneClick: handleClearDoneClick.bind(this),
+      onCheckAllChange: handleCheckAllChange.bind(this),
+      onInput: (e, value) => {
+        this.taskTitle = $event.target.value
+        console.log(this)
+        console.log({e, value})
+      },
       taskTitle: '',
     }
   },
   components: {
     VBtn,
     VInput,
+    VCheckbox,
   },
 }
 </script>
@@ -94,7 +119,7 @@ export default {
     &--done
       opacity: 0.4
       position: relative
-      
+
   &__item-title
     flex-grow: 1
     padding-top: 1em
@@ -107,7 +132,6 @@ export default {
     &:hover
       color: red
   &__checkbox
-    display: block
     margin-bottom: 1em
   &__bottom
     background-color: $gray

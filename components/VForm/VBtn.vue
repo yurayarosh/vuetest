@@ -9,11 +9,12 @@
 
 <script>
 export default {
-  props: {
-    onClick: {
-      type: Function,
-      required: false
+  methods: {
+    onClick(e) {
+      this.$emit('click', e)
     },
+  },
+  props: {
     href: {
       type: String,
       default: '',
