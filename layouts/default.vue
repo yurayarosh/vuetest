@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import VHeader from '@/components/Vheader'
+import VHeader from '@/components/VHeader'
 import VFooter from '@/components/VFooter'
 
 export default {
