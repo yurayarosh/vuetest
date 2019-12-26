@@ -1,8 +1,8 @@
 <template>
-  <a v-if="href" :href="href" class="btn" :class="mod">
+  <a v-if="href" :href="href" class="btn" :class="mod" @click="onClick">
     <slot />
   </a>
-  <button v-else class="btn" :class="mod">
+  <button v-else class="btn" :class="mod" @click="onClick">
     <slot />
   </button>
 </template>
@@ -10,6 +10,10 @@
 <script>
 export default {
   props: {
+    onClick: {
+      type: Function,
+      required: false
+    },
     href: {
       type: String,
       default: '',
@@ -36,6 +40,8 @@ export default {
   color: $white
   background-color: $black
   text-transform: uppercase
+  border-radius: 3px
+  min-width: 120px
   +tr(opacity .3s)
   &:hover
     opacity: 0.7

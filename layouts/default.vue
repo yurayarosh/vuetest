@@ -22,4 +22,11 @@ export default {
 
 <style lang="sass">
 @import '@/sass/app'
+.out
+  display: flex
+  flex-direction: column
+  height: 100vh
+
+.main
+  flex-grow: 1
 </style>

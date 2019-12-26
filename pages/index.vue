@@ -1,6 +1,8 @@
 <template>
   <div class="page">
-    <to-do-list />
+    <div class="container">
+      <to-do-list />
+    </div>
   </div>
 </template>
 
