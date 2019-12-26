@@ -1,0 +1,25 @@
+<template>
+  <div class="out">
+    <v-header />
+    <main class="main">
+      <nuxt />
+    </main>
+    <v-footer />
+  </div>
+</template>
+
+<script>
+import VHeader from '@/components/Vheader'
+import VFooter from '@/components/VFooter'
+
+export default {
+  components: {
+    VHeader,
+    VFooter,
+  },
+}
+</script>
+
+<style lang="sass">
+@import '@/sass/app'
+</style>
