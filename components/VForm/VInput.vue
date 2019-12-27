@@ -13,14 +13,9 @@
 
 <script>
 export default {
-  data() {
-    return {
-      content: this.value,
-    }
-  },
   methods: {
     onInput(e) {
-      this.$emit('input', this.content, e)
+      this.$emit('input', e)
     },
   },
   props: {

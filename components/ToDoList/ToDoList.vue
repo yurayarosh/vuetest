@@ -1,8 +1,8 @@
 <template>
   <div class="to-do-list">
     <div class="to-do-list__top">
-      <form class="to-do-list__form" action="" @submit="onSubmit">
-        <v-input mod="to-do-list__input" :value="taskTitle" @input="onInput, $event" />
+      <form class="to-do-list__form" action="" @submit.prevent="onSubmit">
+        <v-input mod="to-do-list__input" :value="taskTitle" @input="onInput" />
         <v-btn mod="to-do-list__btn btn--primary">add</v-btn>
       </form>
     </div>
@@ -16,7 +16,7 @@
         <div class="to-do-list__item-title" @click="e => onItemClick(e, item)">
           {{ item.title }}
         </div>
-        <button class="to-do-list__item-btn" @click="e => onDeleteItemClick(e, item)">x</button>
+        <button class="to-do-list__item-btn" @click.prevent="e => onDeleteItemClick(e, item)">x</button>
       </div>
     </div>
 
@@ -36,38 +36,40 @@ import VBtn from '@/components/VForm/VBtn'
 import VInput from '@/components/VForm/VInput'
 import VCheckbox from '@/components/VForm/VCheckbox'
 
-function handleSubmit(e) {
-  e.preventDefault()
-  if(this.taskTitle.trim() === '') {
+function onSubmit(e) {
+  if (this.taskTitle.trim() === '') {
     alert('You should write something')
     return
   }
   this.items = [...this.items, { title: this.taskTitle }]
 }
 
-function handleDeleteItemClick(e, item) {
-  e.preventDefault()
+function onInput(e) {
+  this.taskTitle = e.target.value
+}
+
+function onDeleteItemClick(e, item) {  
   this.items = this.items.filter(it => it !== item)
 }
 
-function handleItemClick(e, item) {
+function onItemClick(e, item) {
   item.isDone = !item.isDone
   this.items = [...this.items]
 }
 
-function handleClearAllClick(e) {
+function onClearAllClick(e) {
   this.items = []
 }
 
-function handleClearDoneClick(e) {
+function onClearDoneClick(e) {
   this.items = this.items.filter(item => !item.isDone)
 }
 
-function handleCheckAllChange(e) {
+function onCheckAllChange(e) {
   if (e.target.checked) {
-    this.items.forEach(item => item.isDone = true)
+    this.items.forEach(item => (item.isDone = true))
   } else {
-    this.items.forEach(item => item.isDone = false)
+    this.items.forEach(item => (item.isDone = false))
   }
 
   this.items = [...this.items]
@@ -77,19 +79,17 @@ export default {
   data() {
     return {
       items: [],
-      onSubmit: handleSubmit.bind(this),
-      onDeleteItemClick: handleDeleteItemClick.bind(this),
-      onItemClick: handleItemClick.bind(this),
-      onClearAllClick: handleClearAllClick.bind(this),
-      onClearDoneClick: handleClearDoneClick.bind(this),
-      onCheckAllChange: handleCheckAllChange.bind(this),
-      onInput: (e, value) => {
-        this.taskTitle = $event.target.value
-        console.log(this)
-        console.log({e, value})
-      },
       taskTitle: '',
     }
+  },
+  methods: {
+    onSubmit,
+    onDeleteItemClick,
+    onItemClick,
+    onClearAllClick,
+    onClearDoneClick,
+    onCheckAllChange,
+    onInput,
   },
   components: {
     VBtn,
