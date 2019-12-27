@@ -22,7 +22,6 @@
 
     <div v-if="items.length > 0" class="to-do-list__bottom">
       <v-checkbox title="check all" mod="to-do-list__checkbox" @change="onCheckAllChange" />
-
       <div class="to-do-list__btns">
         <v-btn @click="onClearAllClick">Clear all</v-btn>
         <v-btn mod="btn--primary" @click="onClearDoneClick">Clear done</v-btn>
