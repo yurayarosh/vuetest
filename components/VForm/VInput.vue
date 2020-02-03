@@ -1,52 +1,28 @@
 <template>
-  <div class="input" :class="type === 'select' ? `input--select ${mod}` : mod">
-    <input
+  <div class="input">
+    <component
       class="input__field"
-      :type="type"
-      :name="name"
-      :id="id"
+      :is="fieldName === 'textarea' ? 'textarea' : 'input'"
+      :id="_uid"
       :value="value"
-      @input="onInput"
-    />
+      v-bind="$attrs"
+      @input="$emit('input', $event.target.value)"
+    >{{ fieldName === 'textarea' ? value : '' }}</component>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      content: this.value,
-    }
-  },
-  methods: {
-    onInput(e) {
-      this.$emit('input', this.content, e)
-    },
-  },
+  name: 'VInput',
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       default: '',
     },
-    type: {
+    fieldName: {
       type: String,
-      default: 'text',
+      default: 'input',
     },
-    mod: {
-      type: String,
-      default: '',
-    },
-    name: {
-      type: String,
-      default: '',
-    },
-    id: {
-      type: String,
-      default: '',
-    },
-    // model: {
-    //   type: F
-    // }
   },
 }
 </script>

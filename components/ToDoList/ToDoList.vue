@@ -1,8 +1,13 @@
 <template>
   <div class="to-do-list">
     <div class="to-do-list__top">
-      <form class="to-do-list__form" action="" @submit="onSubmit">
-        <v-input mod="to-do-list__input" :value="taskTitle" @input="onInput, $event" />
+      <form class="to-do-list__form" action="" @submit.prevent="onSubmit">
+        <v-input
+          class="to-do-list__input"
+          type="text"
+          placeholder="Enter task name"
+          v-model="taskTitle"
+        />
         <v-btn mod="to-do-list__btn btn--primary">add</v-btn>
       </form>
     </div>
@@ -11,17 +16,19 @@
       <div
         v-for="(item, i) in items"
         :key="i"
-        :class="item.isDone ? 'to-do-list__item to-do-list__item--done' : 'to-do-list__item'"
+        :id="item.id"
+        class="to-do-list__item "
+        :class="{ 'to-do-list__item--done': item.isDone }"
       >
-        <div class="to-do-list__item-title" @click="e => onItemClick(e, item)">
+        <div class="to-do-list__item-title" @click="item.isDone = !item.isDone">
           {{ item.title }}
         </div>
-        <button class="to-do-list__item-btn" @click="e => onDeleteItemClick(e, item)">x</button>
+        <button class="to-do-list__item-btn" @click="onDeleteBtnClick.call(null, item)">x</button>
       </div>
     </div>
 
     <div v-if="items.length > 0" class="to-do-list__bottom">
-      <v-checkbox title="check all" mod="to-do-list__checkbox" @change="onCheckAllChange" />
+      <v-checkbox title="check all" mod="to-do-list__checkbox" @change="onCheckboxChange" />
 
       <div class="to-do-list__btns">
         <v-btn @click="onClearAllClick">Clear all</v-btn>
@@ -36,58 +43,10 @@ import VBtn from '@/components/VForm/VBtn'
 import VInput from '@/components/VForm/VInput'
 import VCheckbox from '@/components/VForm/VCheckbox'
 
-function handleSubmit(e) {
-  e.preventDefault()
-  if(this.taskTitle.trim() === '') {
-    alert('You should write something')
-    return
-  }
-  this.items = [...this.items, { title: this.taskTitle }]
-}
-
-function handleDeleteItemClick(e, item) {
-  e.preventDefault()
-  this.items = this.items.filter(it => it !== item)
-}
-
-function handleItemClick(e, item) {
-  item.isDone = !item.isDone
-  this.items = [...this.items]
-}
-
-function handleClearAllClick(e) {
-  this.items = []
-}
-
-function handleClearDoneClick(e) {
-  this.items = this.items.filter(item => !item.isDone)
-}
-
-function handleCheckAllChange(e) {
-  if (e.target.checked) {
-    this.items.forEach(item => item.isDone = true)
-  } else {
-    this.items.forEach(item => item.isDone = false)
-  }
-
-  this.items = [...this.items]
-}
-
 export default {
   data() {
     return {
       items: [],
-      onSubmit: handleSubmit.bind(this),
-      onDeleteItemClick: handleDeleteItemClick.bind(this),
-      onItemClick: handleItemClick.bind(this),
-      onClearAllClick: handleClearAllClick.bind(this),
-      onClearDoneClick: handleClearDoneClick.bind(this),
-      onCheckAllChange: handleCheckAllChange.bind(this),
-      onInput: (e, value) => {
-        this.taskTitle = $event.target.value
-        console.log(this)
-        console.log({e, value})
-      },
       taskTitle: '',
     }
   },
@@ -95,6 +54,30 @@ export default {
     VBtn,
     VInput,
     VCheckbox,
+  },
+  methods: {
+    onSubmit() {
+      if (this.taskTitle.trim() !== '') {
+        this.items.push({
+          title: this.taskTitle,
+          isDone: false,
+        })
+      } else {
+        alert('You must write sumthing')
+      }
+    },
+    onCheckboxChange(e) {
+      this.items.forEach(item => (item.isDone = e.target.checked))
+    },
+    onDeleteBtnClick(currentItem) {
+      this.items = this.items.filter(item => currentItem !== item)
+    },
+    onClearDoneClick() {
+      this.items = this.items.filter(item => !item.isDone)
+    },
+    onClearAllClick() {
+      this.items = []
+    },
   },
 }
 </script>

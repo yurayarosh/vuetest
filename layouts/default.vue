@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import setlazy from '@/scripts/setlazy'
 import VHeader from '@/components/VHeader'
 import VFooter from '@/components/VFooter'
 
@@ -16,6 +17,9 @@ export default {
   components: {
     VHeader,
     VFooter,
+  },
+  mounted() {
+    setlazy()
   },
 }
 </script>
