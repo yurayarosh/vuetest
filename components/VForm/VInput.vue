@@ -13,15 +13,12 @@
 
 <script>
 export default {
-<<<<<<< HEAD
   name: 'VInput',
-=======
   methods: {
     onInput(e) {
       this.$emit('input', e)
     },
   },
->>>>>>> 4bdec8f28734ab34e14f2526871d67fe160dcd39
   props: {
     value: {
       type: [String, Number],

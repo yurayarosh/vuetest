@@ -2,16 +2,12 @@
   <div class="to-do-list">
     <div class="to-do-list__top">
       <form class="to-do-list__form" action="" @submit.prevent="onSubmit">
-<<<<<<< HEAD
         <v-input
           class="to-do-list__input"
           type="text"
           placeholder="Enter task name"
           v-model="taskTitle"
         />
-=======
-        <v-input mod="to-do-list__input" :value="taskTitle" @input="onInput" />
->>>>>>> 4bdec8f28734ab34e14f2526871d67fe160dcd39
         <v-btn mod="to-do-list__btn btn--primary">add</v-btn>
       </form>
     </div>
@@ -27,21 +23,12 @@
         <div class="to-do-list__item-title" @click="item.isDone = !item.isDone">
           {{ item.title }}
         </div>
-<<<<<<< HEAD
         <button class="to-do-list__item-btn" @click="onDeleteBtnClick.call(null, item)">x</button>
-=======
-        <button class="to-do-list__item-btn" @click.prevent="e => onDeleteItemClick(e, item)">x</button>
->>>>>>> 4bdec8f28734ab34e14f2526871d67fe160dcd39
       </div>
     </div>
 
     <div v-if="items.length > 0" class="to-do-list__bottom">
-<<<<<<< HEAD
       <v-checkbox title="check all" mod="to-do-list__checkbox" @change="onCheckboxChange" />
-
-=======
-      <v-checkbox title="check all" mod="to-do-list__checkbox" @change="onCheckAllChange" />
->>>>>>> 4bdec8f28734ab34e14f2526871d67fe160dcd39
       <div class="to-do-list__btns">
         <v-btn @click="onClearAllClick">Clear all</v-btn>
         <v-btn mod="btn--primary" @click="onClearDoneClick">Clear done</v-btn>
@@ -55,63 +42,12 @@ import VBtn from '@/components/VForm/VBtn'
 import VInput from '@/components/VForm/VInput'
 import VCheckbox from '@/components/VForm/VCheckbox'
 
-<<<<<<< HEAD
-=======
-function onSubmit(e) {
-  if (this.taskTitle.trim() === '') {
-    alert('You should write something')
-    return
-  }
-  this.items = [...this.items, { title: this.taskTitle }]
-}
-
-function onInput(e) {
-  this.taskTitle = e.target.value
-}
-
-function onDeleteItemClick(e, item) {  
-  this.items = this.items.filter(it => it !== item)
-}
-
-function onItemClick(e, item) {
-  item.isDone = !item.isDone
-  this.items = [...this.items]
-}
-
-function onClearAllClick(e) {
-  this.items = []
-}
-
-function onClearDoneClick(e) {
-  this.items = this.items.filter(item => !item.isDone)
-}
-
-function onCheckAllChange(e) {
-  if (e.target.checked) {
-    this.items.forEach(item => (item.isDone = true))
-  } else {
-    this.items.forEach(item => (item.isDone = false))
-  }
-
-  this.items = [...this.items]
-}
-
->>>>>>> 4bdec8f28734ab34e14f2526871d67fe160dcd39
 export default {
   data() {
     return {
       items: [],
       taskTitle: '',
     }
-  },
-  methods: {
-    onSubmit,
-    onDeleteItemClick,
-    onItemClick,
-    onClearAllClick,
-    onClearDoneClick,
-    onCheckAllChange,
-    onInput,
   },
   components: {
     VBtn,
