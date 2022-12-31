@@ -14,17 +14,17 @@
   },
   "dependencies": {
     "lozad": "^1.14.0",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.11.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
     "eslint": "^4.19.1",
     "eslint-friendly-formatter": "^4.0.1",
-    "eslint-loader": "^2.1.1",
+    "eslint-loader": "^4.0.2",
     "eslint-plugin-vue": "^4.0.0",
     "node-sass": "^4.13.0",
     "prettier": "^1.19.1",
-    "sass-loader": "^8.0.0"
+    "sass-loader": "^13.2.0"
   },
   "prettier": {
     "printWidth": 100,
